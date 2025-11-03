@@ -113,7 +113,7 @@
       font-size:20px;
       line-height:1.2;
     }
-    .hero p{ margin:0; color:var(--muted); font-size:14px; }
+    .hero p{ margin:0; color:var(--muted); font-size:15px; }
 
     .hero-cta{
       display:flex;
@@ -373,8 +373,8 @@
 
     /* small screens tweaks */
     @media(max-width:520px){
-      .brand{ font-size:18px }
-      .hero h1{ font-size:16px }
+      .brand{ font-size:20px }
+      .hero h1{ font-size:21px }
       .card{ flex-direction:column; align-items:flex-start }
       .card .actions{ align-self:stretch; width:100%; flex-direction:row; justify-content:space-between }
       .logo{ width:58px; height:58px; min-width:58px }
