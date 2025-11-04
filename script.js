@@ -302,40 +302,60 @@
     disableGetCode();
 
 
-  const lockerCodes = {
-    SportyBet: "SPX92JD",
-    Bet9ja: "9JX4F8T",
-    "1xBet": "1X88PGQ"
-  };
+  
+        
 
+  // Create popup dynamically
+  const modal = document.createElement("div");
+  modal.classList.add("premium-locker-modal");
+  modal.innerHTML = `
+    <div class="premium-locker-modal-content">
+      <button class="premium-locker-close">&times;</button>
+      <h3>💳 Payment Details</h3>
+      <p>
+        Please pay <b>₦1000</b> to unlock your today's premium booking code.<br><br>
+        <strong>Account Name:</strong> Obaro Maro<br>
+        <strong>Account No:</strong> <span id="account-number">7066290939</span><br>
+        <strong>Bank:</strong> Opay
+      </p>
+      <div>
+        <button class="copy-account-btn">Copy Account Number</button>
+        <button class="proceed-whatsapp-btn">Proceed to WhatsApp</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const accountNumber = "7066290939";
+
+  // Add event to all unlock buttons
   document.querySelectorAll(".premium-locker-btn").forEach(button => {
     button.addEventListener("click", () => {
       const platform = button.dataset.platform;
-      const confirmPay = confirm(
-        `Please pay ₦1000 to this account:\n\nAccount Name: Obaro Maro\nAccount No: 7066290939\nBank: Opay\n\nAfter payment, click OK to get your ${platform} code via WhatsApp.`
-      );
+      modal.style.display = "flex";
 
-      if (confirmPay) {
-        const card = button.closest(".premium-locker-card");
-        const codeEl = card.querySelector(".premium-locker-code");
+      const closeBtn = modal.querySelector(".premium-locker-close");
+      const copyBtn = modal.querySelector(".copy-account-btn");
+      const proceedBtn = modal.querySelector(".proceed-whatsapp-btn");
 
-        // Reveal booking code
-        codeEl.style.color = "#111";
-        codeEl.style.background = "none";
-        codeEl.textContent = lockerCodes[platform];
+      closeBtn.onclick = () => (modal.style.display = "none");
 
-        // Turn button into WhatsApp button
-        button.textContent = "Get Code on WhatsApp";
-        button.style.background = "#25D366";
-        button.onclick = () => {
-          const msg = encodeURIComponent(
-            `Hello! I have paid ₦1000 for today's ${platform} premium booking code.`
-          );
-          window.open(`https://wa.me/2347066290939?text=${msg}`, "_blank");
-        };
-      }
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(accountNumber);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy Account Number"), 1500);
+      };
+
+      proceedBtn.onclick = () => {
+        modal.style.display = "none";
+        const msg = encodeURIComponent(
+          `Hello! I want to pay ₦1000 for today's ${platform} booking code.`
+        );
+        window.open(`https://wa.me/2347066290939?text=${msg}`, "_blank");
+      };
     });
   });
+
 
 
     
